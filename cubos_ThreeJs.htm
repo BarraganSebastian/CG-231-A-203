@@ -18,45 +18,39 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			const cube = new THREE.Mesh( geometry, material );
-			color=[{color:0xFF0000},{color:0x00FF00},{color:0x0000FF},{color:0xFF00FF}];
-			geometria=[[1,1,1],[2,3,5],[1,2,2]];
+			color=[{color:0xFF0000},{color:0x00FF00},{color:0x0000FF},{color:0xFF00FF}]; //Arreglo que contiene los colores
+			geometria=[[1,1,1],[2,3,5],[1,2,2]];  //Arreglo que contiene la geometria de los objetos
 
 			var geo=[]
 			mat=[]
 			obj=[]
 			for(i=0;i<3;i++){
-				geo.push(new THREE.BoxGeometry(geometria[i][0],geometria[i][1],geometria[i][2]));
-				mat.push(new THREE.MeshToonMaterial(color[i]));
-				obj.push(new THREE.Mesh(geo[i], mat[i]));
+				geo.push(new THREE.BoxGeometry(geometria[i][0],geometria[i][1],geometria[i][2]));  //Creacion del vector que contiene la geometria de objetos
+				mat.push(new THREE.MeshToonMaterial(color[i]));  //Arreglo que contiene los materiales de los objetos
+				obj.push(new THREE.Mesh(geo[i], mat[i]));  //Arreglo que crea los objetos con la geometria y materiales establecidos anteriormente
 				scene.add(obj[i]);
 			}
 	
-			obj[1].translateX(4);
+			obj[1].translateX(4);  //Traslaciones a los objetos 
 			obj[2].translateX(9);
 			
-			var spotLight0 = new THREE.SpotLight(0xFFFFFF);
-			spotLight0.position.set(2, 7, 7);
-			spotLight0.lookAt(obj[1]);
-			scene.add(spotLight0);
-	
-			//var ambiColor = "#FFFFFF";
-			//var ambientLight = new THREE.AmbientLight(ambiColor);
-			//scene.add(ambientLight);
+			var spotLight0 = new THREE.SpotLight(0xFFFFFF);  //Creacion de el foco de luz 
+			spotLight0.position.set(2, 7, 7);  //Posicion del foco de luz
+			spotLight0.lookAt(obj[1]);  //Punto hacia donde apunta el foco de luz
+			scene.add(spotLight0);  //Añadir el foco de luz a la escena
+			// Luz creada a partir de las indicaciones en "https://programmerclick.com/article/81771039238/"
 
-			camera.position.z = 7;
+			camera.position.z = 7;  //Ajuste de la posicion de la cámara
 			camera.position.x = 4;
 
 			function animate() {
 				requestAnimationFrame( animate );
 
-				obj[0].rotation.x += 0.01;
-				obj[1].rotation.y += 0.01;
-				obj[2].rotation.z +=0.01;
+				obj[0].rotation.x += 0.01;  //Rotacion del primer objeto en X
+				obj[1].rotation.y += 0.01;  //Rotacion del segundo objeto en Y
+				obj[2].rotation.z +=0.01;  //Rotacion del tercer objeto en Z
 
-				renderer.render( scene, camera );
+				renderer.render( scene, camera );  //Renderizar la escena
 			};
 
 			animate();
