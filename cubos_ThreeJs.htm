@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://threejs.org/build/three.js"></script>
+		
+		<script>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			const cube = new THREE.Mesh( geometry, material );
+			color=[{color:0xFF0000},{color:0x00FF00},{color:0x0000FF},{color:0xFF00FF}];
+			geometria=[[1,1,1],[2,3,5],[1,2,2]];
+
+			var geo=[]
+			mat=[]
+			obj=[]
+			for(i=0;i<3;i++){
+				geo.push(new THREE.BoxGeometry(geometria[i][0],geometria[i][1],geometria[i][2]));
+				mat.push(new THREE.MeshToonMaterial(color[i]));
+				obj.push(new THREE.Mesh(geo[i], mat[i]));
+				scene.add(obj[i]);
+			}
+	
+			obj[1].translateX(4);
+			obj[2].translateX(9);
+			
+			var spotLight0 = new THREE.SpotLight(0xFFFFFF);
+			spotLight0.position.set(2, 7, 7);
+			spotLight0.lookAt(obj[1]);
+			scene.add(spotLight0);
+	
+			//var ambiColor = "#FFFFFF";
+			//var ambientLight = new THREE.AmbientLight(ambiColor);
+			//scene.add(ambientLight);
+
+			camera.position.z = 7;
+			camera.position.x = 4;
+
+			function animate() {
+				requestAnimationFrame( animate );
+
+				obj[0].rotation.x += 0.01;
+				obj[1].rotation.y += 0.01;
+				obj[2].rotation.z +=0.01;
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+		</script>
+	</body>
+</html>
